@@ -60,22 +60,22 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
-    // Jetpack Compose material3
+    //Jetpack Compose
     implementation ("androidx.compose.material3:material3:1.1.0")
 
-    // Navigation Compose
+    // avigation
     implementation ("androidx.navigation:navigation-compose:2.7.0")
 
-    // ViewModel + StateFlow
+    //ViewModel
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
-    // Room (Kotlin Coroutines + Flow)
+    //Room
     implementation ("androidx.room:room-runtime:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
     implementation ("androidx.room:room-ktx:2.5.2")
 
-    // CameraX (core, camera2, lifecycle, view)
+    //Camera
     implementation ("androidx.camera:camera-core:1.2.3")
     implementation ("androidx.camera:camera-camera2:1.2.3")
     implementation ("androidx.camera:camera-lifecycle:1.2.3")
