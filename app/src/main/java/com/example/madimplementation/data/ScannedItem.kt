@@ -10,4 +10,4 @@ data class ScannedItem(
     val model: String?,
     val imagePath: String?,
     val timestamp: Long = System.currentTimeMillis()
-)
+)//needed for commit
