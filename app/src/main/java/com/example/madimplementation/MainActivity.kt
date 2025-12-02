@@ -12,4 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.madimplementation.ui.theme.MADimplementationTheme
+import androidx.navigation.compose.rememberNavController
+import com.example.madimplementation.navigation.AppNav
 
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MADimplementationTheme {
+                val navController = rememberNavController()
+                AppNav(navController)
+            }
+        }
+    }
+}
