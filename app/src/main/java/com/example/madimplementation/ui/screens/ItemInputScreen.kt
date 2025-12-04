@@ -1,0 +1,28 @@
+package com.example.madimplementation.ui.screens
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.*
+import androidx.navigation.NavController
+import androidx.compose.ui.unit.dp
+import com.example.madimplementation.navigation.Screen
+import androidx.compose.ui.Modifier
+
+
+@Composable
+fun ItemInputScreen(navController: NavController) {
+    var brand by remember { mutableStateOf("") }
+    var model by remember { mutableStateOf("") }
+
+    Column(Modifier.fillMaxSize().padding(24.dp)) {
+        Text("Manual Input", style = androidx.compose.material3.MaterialTheme.typography.headlineMedium)
+        Spacer(Modifier.height(12.dp))
+        OutlinedTextField(value = brand, onValueChange = { brand = it }, label = { Text("Brand") })
+        Spacer(Modifier.height(8.dp))
+        OutlinedTextField(value = model, onValueChange = { model = it }, label = { Text("Model") })
+        Spacer(Modifier.height(12.dp))
+        Button(onClick = { navController.navigate(Screen.Info.route) }) { Text("View Info") }
+    }
+}

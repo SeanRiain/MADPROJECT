@@ -15,6 +15,7 @@ fun IntentScreen(navController: NavController) {
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Text("I would like to get help with:", style = androidx.compose.material3.MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(12.dp))
+
         Button(onClick = { navController.navigate(Screen.Category.route) }) { Text("User Experience") }
         Spacer(Modifier.height(8.dp))
         Button(onClick = { navController.navigate(Screen.Category.route) }) { Text("Buying the Right Product") }
