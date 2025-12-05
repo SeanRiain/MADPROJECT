@@ -9,10 +9,12 @@ import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import com.example.madimplementation.navigation.Screen
 import androidx.compose.ui.Modifier
+import com.example.madimplementation.viewmodel.MainViewModel
+//this is allowing second argument in the function declaration and enabling the appnav to work
 
 
 @Composable
-fun ItemInputScreen(navController: NavController) {
+fun ItemInputScreen(navController: NavController, mainViewModel: MainViewModel) {
     var brand by remember { mutableStateOf("") }
     var model by remember { mutableStateOf("") }
 

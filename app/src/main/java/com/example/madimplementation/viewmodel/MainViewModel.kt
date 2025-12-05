@@ -1,5 +1,6 @@
 package com.example.madimplementation.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,11 +16,12 @@ class MainViewModel : ViewModel() {
     private val _category = MutableStateFlow<String?>(null) //stores path of categories
     val category = _category.asStateFlow()
 
-    private val _capturedUri = MutableStateFlow<String?>(null) //stores path of photos
+    private val _capturedUri = MutableStateFlow<Uri?>(null) //stores path of photos
     val capturedUri = _capturedUri.asStateFlow()
 
     fun setIntent(i: IntentType) { _intent.value = i }
     fun setCategory(cat: String) { _category.value = cat }
-    fun setCapturedUri(uri: String) { _capturedUri.value = uri }
+    //fun setCapturedUri(uri: String) { _capturedUri.value = uri }
+    fun setCapturedUri(uri: Uri?) { _capturedUri.value = uri }
     //allows screens to do state updates
 }

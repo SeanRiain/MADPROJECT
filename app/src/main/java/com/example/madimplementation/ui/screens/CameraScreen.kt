@@ -27,9 +27,14 @@ import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.camera.core.ImageCaptureException
+import com.example.madimplementation.viewmodel.MainViewModel
+//this is allowing second argument in the function declaration and enabling the appnav to work
+import com.example.madimplementation.navigation.Screen
+import androidx.compose.ui.unit.dp
+
 
 @Composable
-fun CameraScreen(navController: NavController) {
+fun CameraScreen(navController: NavController, mainViewModel: MainViewModel) {
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -45,7 +50,7 @@ fun CameraScreen(navController: NavController) {
             .build()
     }
 
-    // ---- Permission handling ----
+    //Permission handling
     var permissionGranted by remember { mutableStateOf(false) }
 
     val launcher = rememberLauncherForActivityResult(RequestPermission()) { granted ->
@@ -56,7 +61,7 @@ fun CameraScreen(navController: NavController) {
         launcher.launch(Manifest.permission.CAMERA)
     }
 
-    // Don't show camera preview until permission is granted
+    //Dont show camera preview until permission is granted
     if (permissionGranted) {
 
         AndroidView(
@@ -84,54 +89,70 @@ fun CameraScreen(navController: NavController) {
             }, ContextCompat.getMainExecutor(context))
         }
 
-        // Capture button
+        //Buttons
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
-            Button(onClick = {
-                val name = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH)
-                    .format(System.currentTimeMillis())
 
-                val contentValues = ContentValues().apply {
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, "IMG_$name.jpg")
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/MADimplementation")
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+                //Capture Button
+                Button(onClick = {
+                    val name = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH)
+                        .format(System.currentTimeMillis())
+
+                    val contentValues = ContentValues().apply {
+                        put(MediaStore.MediaColumns.DISPLAY_NAME, "IMG_$name.jpg")
+                        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/MADimplementation")
+                        }
                     }
-                }
 
-                val outputOptions = ImageCapture.OutputFileOptions
-                    .Builder(
-                        context.contentResolver,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        contentValues
+                    val outputOptions = ImageCapture.OutputFileOptions
+                        .Builder(
+                            context.contentResolver,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            contentValues
+                        )
+                        .build()
+
+                    imageCapture.takePicture(
+                        outputOptions,
+                        executor,
+                        object : ImageCapture.OnImageSavedCallback {
+
+                            override fun onError(exc: ImageCaptureException) {
+                                Log.e("CameraScreen", "Capture failed: ${exc.message}")
+                            }
+
+                            override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                                val savedUri: Uri? = output.savedUri
+                                Log.d("CameraScreen", "Saved: $savedUri")
+
+                                mainViewModel.setCapturedUri(savedUri)
+                                navController.navigate(Screen.Info.route)
+                            }
+                        }
                     )
-                    .build()
+                }) {
+                    Text("Capture")
+                }
+                Spacer(modifier = Modifier.height(12.dp))
 
-                imageCapture.takePicture(
-                    outputOptions,
-                    executor,
-                    object : ImageCapture.OnImageSavedCallback {
-
-                        override fun onError(exc: ImageCaptureException) {
-                            Log.e("CameraScreen", "Capture failed: ${exc.message}")
-                        }
-
-                        override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                            val savedUri: Uri? = output.savedUri
-                            Log.d("CameraScreen", "Saved: $savedUri")
-
-                            navController.navigate("photo_result")
-                        }
-                    }
-                )
-            }) {
-                Text("Capture")
+                //Input Manually Button
+                Button(onClick = {
+                    mainViewModel.setCapturedUri(null)   //clear previous photo
+                    navController.navigate(Screen.InputItem.route)
+                }) {
+                    Text("Input Item Manually")
+                }
             }
         }
-    } else {
-        // Permission denied UI if needed
+    }
+        else {
+        //Permission denied UI
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

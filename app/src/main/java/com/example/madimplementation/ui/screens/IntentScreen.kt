@@ -8,18 +8,24 @@ import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import com.example.madimplementation.navigation.Screen
 import androidx.compose.ui.Modifier
-
+import com.example.madimplementation.viewmodel.MainViewModel
+//this is allowing second argument in the function declaration and enabling the appnav to work
 
 @Composable
-fun IntentScreen(navController: NavController) {
+fun IntentScreen(navController: NavController, mainViewModel: MainViewModel) {
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Text("I would like to get help with:", style = androidx.compose.material3.MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(12.dp))
 
-        Button(onClick = { navController.navigate(Screen.Category.route) }) { Text("User Experience") }
+        Button(onClick = {mainViewModel.setIntent(com.example.madimplementation.viewmodel.IntentType.UX);
+                          navController.navigate(Screen.Category.route) }) { Text("User Experience") }
+
         Spacer(Modifier.height(8.dp))
-        Button(onClick = { navController.navigate(Screen.Category.route) }) { Text("Buying the Right Product") }
+        Button(onClick = {mainViewModel.setIntent(com.example.madimplementation.viewmodel.IntentType.SHOPPING);
+                          navController.navigate(Screen.Category.route) }) { Text("Buying the Right Product") }
+
         Spacer(Modifier.height(8.dp))
-        Button(onClick = { navController.navigate(Screen.Category.route) }) { Text("Troubleshooting") }
+        Button(onClick = {mainViewModel.setIntent(com.example.madimplementation.viewmodel.IntentType.TROUBLESHOOTING);
+                          navController.navigate(Screen.Category.route) }) { Text("Troubleshooting") }
     }
 }

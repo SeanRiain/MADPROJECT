@@ -9,9 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.madimplementation.navigation.Screen
+import com.example.madimplementation.viewmodel.MainViewModel
+//this is allowing second argument in the function declaration and enabling the appnav to work
+
 
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(navController: NavController, mainViewModel: MainViewModel) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Welcome", style = androidx.compose.material3.MaterialTheme.typography.headlineLarge)
