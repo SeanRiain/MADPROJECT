@@ -31,7 +31,6 @@ fun AppNav(navController: NavHostController) {
         composable(Screen.Camera.route) { CameraScreen(navController, mainViewModel) }
 
         composable(Screen.InputItem.route) { ItemInputScreen(navController, mainViewModel) }
-        //composable(Screen.PhotoResult.route) { PhotoResultScreen(navController) }
 
         composable(Screen.Info.route) { ItemInfoScreen(navController, mainViewModel) }
     }

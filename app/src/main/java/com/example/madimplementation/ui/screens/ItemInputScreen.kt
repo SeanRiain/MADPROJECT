@@ -25,6 +25,11 @@ fun ItemInputScreen(navController: NavController, mainViewModel: MainViewModel) 
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(value = model, onValueChange = { model = it }, label = { Text("Model") })
         Spacer(Modifier.height(12.dp))
-        Button(onClick = { navController.navigate(Screen.Info.route) }) { Text("View Info") }
+        //needed to clear photo cache when not using the camera
+        Button(onClick = {
+            mainViewModel.setCapturedUri(null)
+            navController.navigate(Screen.Info.route)
+        }) { Text("View Info") }
+
     }
 }
