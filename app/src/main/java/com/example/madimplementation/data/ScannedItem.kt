@@ -11,5 +11,8 @@ data class ScannedItem(
     val brand: String?,
     val model: String?,
     val imagePath: String?,
+    val category: String?,
+    val intent: String?,
+    val summaryText: String?,
     val timestamp: Long = System.currentTimeMillis()
 )

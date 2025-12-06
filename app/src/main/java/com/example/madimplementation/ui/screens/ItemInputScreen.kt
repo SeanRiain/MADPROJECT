@@ -21,13 +21,18 @@ fun ItemInputScreen(navController: NavController, mainViewModel: MainViewModel) 
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         Text("Manual Input", style = androidx.compose.material3.MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(12.dp))
+
         OutlinedTextField(value = brand, onValueChange = { brand = it }, label = { Text("Brand") })
         Spacer(Modifier.height(8.dp))
+
         OutlinedTextField(value = model, onValueChange = { model = it }, label = { Text("Model") })
         Spacer(Modifier.height(12.dp))
-        //needed to clear photo cache when not using the camera
+        //needed to clear photo cache when not using the camera and to set brand/model
         Button(onClick = {
             mainViewModel.setCapturedUri(null)
+            mainViewModel.setBrand(brand)
+            mainViewModel.setModel(model)
+            //navigate to info screen; ItemInfoScreen will auto-save
             navController.navigate(Screen.Info.route)
         }) { Text("View Info") }
 

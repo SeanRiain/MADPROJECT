@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [ScannedItem::class], version = 1) //Creates a database using the scanneditem db table
+@Database(entities = [ScannedItem::class], version = 2) //Creates a database using the scanneditem db table
 abstract class AppDatabase : RoomDatabase() {
     abstract fun scannedItemDao(): ScannedItemDao
 

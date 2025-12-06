@@ -61,9 +61,15 @@ fun CameraScreen(navController: NavController, mainViewModel: MainViewModel) {
         launcher.launch(Manifest.permission.CAMERA)
     }
 
-    //Dont show camera preview until permission is granted
-    if (permissionGranted) {
+    //Dispose executor to avoid leaks
+    DisposableEffect(Unit) {
+        onDispose {
+            executor.shutdown()
+        }
+    }
 
+    //Don't show camera preview until permission is granted
+    if (permissionGranted) {
         AndroidView(
             factory = { previewView },
             modifier = Modifier.fillMaxSize()
@@ -131,7 +137,9 @@ fun CameraScreen(navController: NavController, mainViewModel: MainViewModel) {
                                 val savedUri: Uri? = output.savedUri
                                 Log.d("CameraScreen", "Saved: $savedUri")
 
+                                //store Uri in ViewModel
                                 mainViewModel.setCapturedUri(savedUri)
+
                                 navController.navigate(Screen.Info.route)
                             }
                         }

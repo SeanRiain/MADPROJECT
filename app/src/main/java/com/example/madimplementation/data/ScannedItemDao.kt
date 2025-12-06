@@ -6,7 +6,7 @@ package com.example.madimplementation.data
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
-
+@Dao
 interface ScannedItemDao {
     @Query("SELECT * FROM ScannedItem ORDER BY timestamp DESC")
     fun getAll(): Flow<List<ScannedItem>>
